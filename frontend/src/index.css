@@ -12,3 +12,62 @@ body { @apply bg-slate-50 text-slate-800 antialiased; }
   .input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200; }
   .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500; }
 }
+
+
+/* ---------- Full-screen animated loader ---------- */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: visible;
+  margin: auto;
+  inset: 0;
+}
+
+/* Transparent overlay */
+.loading:before {
+  content: "";
+  display: block;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Hide the "Loading…" text visually (stays available to screen readers) */
+.loading {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:after {
+  content: "";
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  box-shadow:
+    rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0,
+    rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0,
+    rgba(0, 0, 0, 0.75) -1.5em 0 0 0,
+    rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0,
+    rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
+    rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+@keyframes spinner {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading:after { animation-duration: 4s; }
+}

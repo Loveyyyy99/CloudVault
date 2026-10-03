@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import StatusBadge, { ProviderMark } from "../components/StatusBadge.jsx";
 import api, { downloadFile, errorMessage } from "../services/api.js";
 import { fmtBytes, PROVIDER_LABEL, timeAgo } from "../utils/format.js";
+import Loader from "../components/Loader.jsx";
 
 const FILTERS = ["ALL", "VERIFIED", "PARTIAL", "FAILED", "PENDING"];
 
@@ -52,7 +53,7 @@ export default function Backups() {
             <tr><th className="p-3">File</th><th className="p-3 text-center">Backblaze B2</th><th className="p-3 text-center">Supabase</th><th className="p-3">Status</th><th className="p-3">Date</th><th className="p-3 text-right">Actions</th></tr>
           </thead>
           <tbody>
-            {rows === null && <tr><td colSpan={6} className="p-6 text-center text-slate-400">Loading…</td></tr>}
+          {(rows === null || busy) && <Loader />}
             {rows?.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-slate-400">No backups found.</td></tr>}
             {rows?.map((f) => {
               const by = Object.fromEntries(f.backups.map((b) => [b.provider, b]));

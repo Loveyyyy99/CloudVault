@@ -3,6 +3,7 @@ import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAx
 import StatusBadge from "../components/StatusBadge.jsx";
 import api, { errorMessage } from "../services/api.js";
 import { fmtBytes, PROVIDER_LABEL, timeAgo } from "../utils/format.js";
+import Loader from "../components/Loader.jsx";
 
 const Stat = ({ label, value }) => (
   <div className="card"><div className="label">{label}</div><div className="text-2xl font-bold tracking-tight">{value}</div></div>
@@ -32,7 +33,7 @@ export default function Dashboard() {
   useEffect(() => localStorage.setItem("cv_price", JSON.stringify(price)), [price]);
 
   if (error) return <p className="text-red-600">{error}</p>;
-  if (!s) return <p className="text-slate-400">Loading dashboard…</p>;
+  if (!s) return <Loader />;
   const { totals: t, providers: p, metrics: m, limits } = s;
   const usage = [{ name: "Backblaze B2", MB: +(p.b2.used / 1048576).toFixed(2) }, { name: "Supabase Storage", MB: +(p.supabase.used / 1048576).toFixed(2) }];
   const gb = (b) => b / 1073741824;
